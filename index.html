@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>优购商城</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#34d399', // 更柔和的青绿色主调
+            accent: '#f97316',   // 活力橙强调色
+            secondary: '#60a5fa',// 辅助蓝色
+            neutral: '#f9fafb',  // 中性背景色
+            dark: '#1f2937',     // 深色文本
+          },
+          animation: {
+            'pulse-light': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'slide-up': 'slideUp 0.3s ease-out',
+          },
+          keyframes: {
+            slideUp: {
+              '0%': { transform: 'translateY(10px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .header-shape {
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+      }
+      .backdrop-blur-custom {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+    }
+
+    /* 基础适配优化 */
+    html {
+      font-size: calc(100vw / 37.5); /* REM适配基准 */
+    }
+    body {
+      @apply bg-neutral text-dark antialiased;
+      overflow-x: hidden;
+    }
+
+    /* 滚动条优化 */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      @apply bg-primary/30 rounded-full;
+    }
+    ::-webkit-scrollbar-track {
+      @apply bg-neutral;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏（固定定位+毛玻璃效果） -->
+  <div class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-custom shadow-sm">
+    <div class="flex items-center justify-between px-4 py-2">
+      <h1 class="text-[1.8rem] font-bold text-primary text-shadow">优购商城</h1>
+      <div class="flex items-center gap-4">
+        <button class="relative">
+          <i class="fa fa-shopping-cart text-[1.6rem] text-dark"></i>
+          <span class="absolute -top-1 -right-1 w-[1.2rem] h-[1.2rem] bg-red-500 text-white text-[0.8rem] rounded-full flex items-center justify-center">3</span>
+        </button>
+        <button>
+          <i class="fa fa-user text-[1.6rem] text-dark"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 头部区域（预留顶部导航高度） -->
+  <header class="bg-primary header-shape py-16 px-4 text-white mt-[4rem]">
+    <div class="max-w-md mx-auto text-center">
+      <h2 class="text-[2rem] font-bold mb-2 text-shadow animate-slide-up">品质好物 · 轻松选购</h2>
+      <p class="text-white/90 text-[1.4rem] animate-slide-up delay-75">新人专享8折优惠，全场满88元包邮</p>
+    </div>
+  </header>
+
+  <!-- 搜索栏（优化样式+交互） -->
+  <div class="px-4 py-3 -mt-4 relative z-10">
+    <div class="relative">
+      <input 
+        type="text" 
+        placeholder="搜一搜：商品名称/分类/品牌" 
+        class="w-full py-[1rem] px-[1.6rem] pl-[3.8rem] rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-sm transition-all duration-300 focus:shadow-md text-[1.4rem]"
+      >
+      <i class="fa fa-search absolute left-[1.2rem] top-1/2 -translate-y-1/2 text-[1.4rem] text-gray-400"></i>
+      <button class="absolute right-[1rem] top-1/2 -translate-y-1/2 bg-primary text-white px-[1.2rem] py-[0.4rem] rounded-full text-[1.2rem]">
+        搜索
+      </button>
+    </div>
+  </div>
+
+  <!-- 分类导航栏（横向滚动） -->
+  <div class="px-4 py-2 overflow-x-auto scrollbar-hide">
+    <div class="flex gap-3 whitespace-nowrap">
+      <button class="bg-primary text-white px-[1.2rem] py-[0.6rem] rounded-full text-[1.2rem]">全部</button>
+      <button class="bg-white text-dark px-[1.2rem] py-[0.6rem] rounded-full text-[1.2rem] card-hover">服饰</button>
+      <button class="bg-white text-dark px-[1.2rem] py-[0.6rem] rounded-full text-[1.2rem] card-hover">数码</button>
+      <button class="bg-white text-dark px-[1.2rem] py-[0.6rem] rounded-full text-[1.2rem] card-hover">家居</button>
+      <button class="bg-white text-dark px-[1.2rem] py-[0.6rem] rounded-full text-[1.2rem] card-hover">美妆</button>
+      <button class="bg-white text-dark px-[1.2rem] py-[0.6rem] rounded-full text-[1.2rem] card-hover">食品</button>
+      <button class="bg-white text-dark px-[1.2rem] py-[0.6rem] rounded-full text-[1.2rem] card-hover">运动</button>
+    </div>
+  </div>
+
+  <!-- 功能入口区（优化视觉+交互） -->
+  <div class="px-4 py-3">
+    <div class="grid grid-cols-4 gap-4">
+      <!-- 功能1：精选商品 -->
+      <div class="text-center card-hover">
+        <div class="w-[3.5rem] h-[3.5rem] mx-auto bg-white rounded-lg flex items-center justify-center shadow-sm">
+          <i class="fa fa-gift text-[1.8rem] text-primary"></i>
+        </div>
+        <p class="mt-1 text-[1.2rem]">精选商品</p>
+      </div>
+
+      <!-- 功能2：极速配送 -->
+      <div class="text-center card-hover">
+        <div class="w-[3.5rem] h-[3.5rem] mx-auto bg-white rounded-lg flex items-center justify-center shadow-sm">
+          <i class="fa fa-bolt text-[1.8rem] text-primary"></i>
+        </div>
+        <p class="mt-1 text-[1.2rem]">极速配送</p>
+      </div>
+
+      <!-- 功能3：限时折扣 -->
+      <div class="text-center card-hover">
+        <div class="w-[3.5rem] h-[3.5rem] mx-auto bg-white rounded-lg flex items-center justify-center shadow-sm relative">
+          <i class="fa fa-clock-o text-[1.8rem] text-primary"></i>
+          <span class="absolute -top-1 -right-1 w-[1.5rem] h-[1.5rem] bg-accent text-white text-[0.8rem] rounded-full flex items-center justify-center animate-pulse-light">
+            <i class="fa fa-fire"></i>
+          </span>
+        </div>
+        <p class="mt-1 text-[1.2rem]">限时折扣</p>
+      </div>
+
+      <!-- 功能4：我的订单 -->
+      <div class="text-center card-hover">
+        <div class="w-[3.5rem] h-[3.5rem] mx-auto bg-white rounded-lg flex items-center justify-center shadow-sm">
+          <i class="fa fa-list-alt text-[1.8rem] text-primary"></i>
+        </div>
+        <p class="mt-1 text-[1.2rem]">我的订单</p>
+      </div>
+    </div>
+
+    <!-- 第二排功能入口 -->
+    <div class="grid grid-cols-4 gap-4 mt-4">
+      <!-- 功能5：积分兑换 -->
+      <div class="text-center card-hover">
+        <div class="w-[3.5rem] h-[3.5rem] mx-auto bg-white rounded-lg flex items-center justify-center shadow-sm">
+          <i class="fa fa-star text-[1.8rem] text-primary"></i>
+        </div>
+        <p class="mt-1 text-[1.2rem]">积分兑换</p>
+      </div>
+
+      <!-- 功能6：售后保障 -->
+      <div class="text-center card-hover">
+        <div class="w-[3.5rem] h-[3.5rem] mx-auto bg-white rounded-lg flex items-center justify-center shadow-sm">
+          <i class="fa fa-shield text-[1.8rem] text-primary"></i>
+        </div>
+        <p class="mt-1 text-[1.2rem]">售后保障</p>
+      </div>
+
+      <!-- 功能7：购物车 -->
+      <div class="text-center card-hover">
+        <div class="w-[3.5rem] h-[3.5rem] mx-auto bg-white rounded-lg flex items-center justify-center shadow-sm relative">
+          <i class="fa fa-shopping-basket text-[1.8rem] text-primary"></i>
+          <span class="absolute -top-1 -right-1 w-[1.5rem] h-[1.5rem] bg-red-500 text-white text-[0.8rem] rounded-full flex items-center justify-center">3</span>
+        </div>
+        <p class="mt-1 text-[1.2rem]">购物车</p>
+      </div>
+
+      <!-- 功能8：联系客服 -->
+      <div class="text-center card-hover">
+        <div class="w-[3.5rem] h-[3.5rem] mx-auto bg-white rounded-lg flex items-center justify-center shadow-sm">
+          <i class="fa fa-comments text-[1.8rem] text-primary"></i>
+        </div>
+        <p class="mt-1 text-[1.2rem]">联系客服</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新人福利区（优化视觉+动效） -->
+  <div class="px-4 py-3">
+    <div class="bg-accent rounded-2xl overflow-hidden relative shadow-md animate-slide-up">
+      <div class="p-4 text-white">
+        <h3 class="text-[1.8rem] font-bold">新人大礼包</h3>
+        <p class="text-white/90 text-[1.2rem] mt-1">首单立减20元 + 免运费 + 专属优惠券</p>
+        <button class="mt-3 bg-white text-accent px-[1.4rem] py-[0.8rem] rounded-full text-[1.4rem] font-medium card-hover">
+          立即领取 <i class="fa fa-arrow-right ml-1"></i>
+        </button>
+      </div>
+      <!-- 装饰元素 -->
+      <div class="absolute right-2 bottom-0 w-[5rem] h-[5rem] opacity-20">
+        <svg viewBox="0 0 100 100" fill="white">
+          <circle cx="50" cy="50" r="40" />
+        </svg>
+      </div>
+      <div class="absolute right-[3rem] top-[1rem] w-[2rem] h-[2rem] bg-white/20 rounded-full animate-pulse-light"></div>
+    </div>
+  </div>
+
+  <!-- 商品推荐区（优化布局+交互） -->
+  <div class="px-4 py-3">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-[1.6rem] font-bold">为你推荐</h2>
+      <a href="#" class="text-secondary text-[1.2rem]">查看更多 <i class="fa fa-angle-right"></i></a>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-3">
+      <!-- 商品1 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm card-hover">
+        <div class="relative">
+          <img src="https://picsum.photos/400/300?random=1" alt="夏季纯棉短袖T恤" class="w-full h-[10rem] object-cover">
+          <span class="absolute top-2 left-2 bg-red-500 text-white text-[1rem] px-2 py-1 rounded-md">热销</span>
+        </div>
+        <div class="p-3">
+          <h4 class="text-[1.4rem] font-medium line-clamp-2">夏季纯棉短袖T恤 宽松休闲百搭</h4>
+          <div class="flex items-center justify-between mt-2">
+            <p class="text-red-500 font-bold text-[1.6rem]">¥39.9</p>
+            <del class="text-gray-400 text-[1rem]">¥69.9</del>
+          </div>
+          <button class="w-full mt-2 bg-primary/10 text-primary text-[1.2rem] py-[0.6rem] rounded-lg card-hover">
+            <i class="fa fa-shopping-cart mr-1"></i> 加入购物车
+          </button>
+        </div>
+      </div>
+
+      <!-- 商品2 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm card-hover">
+        <div class="relative">
+          <img src="https://picsum.photos/400/300?random=2" alt="便携式无线蓝牙耳机" class="w-full h-[10rem] object-cover">
+          <span class="absolute top-2 left-2 bg-secondary text-white text-[1rem] px-2 py-1 rounded-md">新品</span>
+        </div>
+        <div class="p-3">
+          <h4 class="text-[1.4rem] font-medium line-clamp-2">便携式无线蓝牙耳机 长续航降噪</h4>
+          <div class="flex items-center justify-between mt-2">
+            <p class="text-red-500 font-bold text-[1.6rem]">¥89</p>
+            <del class="text-gray-400 text-[1rem]">¥129</del>
+          </div>
+          <button class="w-full mt-2 bg-primary/10 text-primary text-[1.2rem] py-[0.6rem] rounded-lg card-hover">
+            <i class="fa fa-shopping-cart mr-1"></i> 加入购物车
+          </button>
+        </div>
+      </div>
+
+      <!-- 商品3 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm card-hover">
+        <div class="relative">
+          <img src="https://picsum.photos/400/300?random=3" alt="迷你加湿器" class="w-full h-[10rem] object-cover">
+          <span class="absolute top-2 left-2 bg-primary text-white text-[1rem] px-2 py-1 rounded-md">特惠</span>
+        </div>
+        <div class="p-3">
+          <h4 class="text-[1.4rem] font-medium line-clamp-2">迷你加湿器 家用卧室静音补水</h4>
+          <div class="flex items-center justify-between mt-2">
+            <p class="text-red-500 font-bold text-[1.6rem]">¥49</p>
+            <del class="text-gray-400 text-[1rem]">¥79</del>
+          </div>
+          <button class="w-full mt-2 bg-primary/10 text-primary text-[1.2rem] py-[0.6rem] rounded-lg card-hover">
+            <i class="fa fa-shopping-cart mr-1"></i> 加入购物车
+          </button>
+        </div>
+      </div>
+
+      <!-- 商品4 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm card-hover">
+        <div class="relative">
+          <img src="https://picsum.photos/400/300?random=4" alt="纯棉毛巾套装" class="w-full h-[10rem] object-cover">
+          <span class="absolute top-2 left-2 bg-accent text-white text-[1rem] px-2 py-1 rounded-md">折扣</span>
+        </div>
+        <div class="p-3">
+          <h4 class="text-[1.4rem] font-medium line-clamp-2">纯棉毛巾套装 吸水柔软不掉毛</h4>
+          <div class="flex items-center justify-between mt-2">
+            <p class="text-red-500 font-bold text-[1.6rem]">¥29.9</p>
+            <del class="text-gray-400 text-[1rem]">¥49.9</del>
+          </div>
+          <button class="w-full mt-2 bg-primary/10 text-primary text-[1.2rem] py-[0.6rem] rounded-lg card-hover">
+            <i class="fa fa-shopping-cart mr-1"></i> 加入购物车
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部导航栏（移动端标配） -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-100 z-40">
+    <div class="grid grid-cols-4 h-[5rem]">
+      <button class="flex flex-col items-center justify-center text-primary">
+        <i class="fa fa-home text-[1.6rem]"></i>
+        <span class="text-[1rem] mt-1">首页</span>
+      </button>
+      <button class="flex flex-col items-center justify-center text-gray-500">
+        <i class="fa fa-th-large text-[1.6rem]"></i>
+        <span class="text-[1rem] mt-1">分类</span>
+      </button>
+      <button class="flex flex-col items-center justify-center text-gray-500">
+        <i class="fa fa-bell text-[1.6rem]"></i>
+        <span class="text-[1rem] mt-1">消息</span>
+      </button>
+      <button class="flex flex-col items-center justify-center text-gray-500">
+        <i class="fa fa-user text-[1.6rem]"></i>
+        <span class="text-[1rem] mt-1">我的</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 适配底部导航高度 -->
+  <div class="h-[5rem]"></div>
+
+  <script>
+    // 页面滚动效果：顶部导航栏背景透明度变化
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('.fixed.top-0');
+      const scrollTop = window.scrollY;
+      
+      if (scrollTop > 50) {
+        header.classList.add('bg-white/95');
+        header.classList.remove('bg-white/80');
+      } else {
+        header.classList.add('bg-white/80');
+        header.classList.remove('bg-white/95');
+      }
+    });
+
+    // 商品加入购物车交互
+    const addCartBtns = document.querySelectorAll('button:has(.fa-shopping-cart)');
+    addCartBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.innerHTML = '<i class="fa fa-check mr-1"></i> 已加入';
+        this.classList.remove('bg-primary/10', 'text-primary');
+        this.classList.add('bg-green-100', 'text-green-600');
+        
+        setTimeout(() => {
+          this.innerHTML = '<i class="fa fa-shopping-cart mr-1"></i> 加入购物车';
+          this.classList.add('bg-primary/10', 'text-primary');
+          this.classList.remove('bg-green-100', 'text-green-600');
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>
